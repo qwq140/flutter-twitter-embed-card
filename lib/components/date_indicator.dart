@@ -5,16 +5,17 @@ import 'package:twitter_embed_card/svg_icon.dart';
 class DateIndicator extends StatelessWidget {
 
   final String date;
+  final String time;
 
-  const DateIndicator({Key? key, required this.date}) : super(key: key);
+  const DateIndicator({Key? key, required this.date, required this.time}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(date),
-        SvgIcon(asset: SvgAsset.info),
+        Text('$time · $date'),
+        const SvgIcon(asset: SvgAsset.info),
       ],
     );
   }

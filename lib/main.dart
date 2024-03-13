@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_embed_card/components/content.dart';
-import 'package:twitter_embed_card/components/custom_round_button.dart';
+import 'package:twitter_embed_card/components/read_reply_button.dart';
 import 'package:twitter_embed_card/components/date_indicator.dart';
 import 'package:twitter_embed_card/components/social_action_row.dart';
 import 'package:twitter_embed_card/components/user_info.dart';
+import 'package:twitter_embed_card/data/tweet_data.dart';
 import 'package:twitter_embed_card/svg_asset.dart';
-import 'package:twitter_embed_card/svg_icon.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,11 +18,29 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    TweetData tweetData = TweetData(
+      profileUrl: 'assets/andrea-avatar.png',
+      nickname: 'Andrea Bizzotto',
+      username: 'biz84',
+      contentText: '''
+Did you know?
+
+When you call `MediaQuery.of(context)` inside a build method, the widget will rebuild when *any* of the MediaQuery properties change.
+
+But there's a better way that lets you depend only on the properties you care about (and minimize unnecessary rebuilds). 👇
+''',
+      contentImage: 'assets/media-query-banner.jpg',
+      time: '10:21 AM',
+      date: 'Jun 20, 2023',
+      likeCount: 997,
+      replyCount: 12,
+    );
+
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           // Use Center as layout has unconstrained width (loose constraints),
           // together with SizedBox to specify the max width (tight constraints)
           // See this thread for more info:
@@ -30,7 +48,9 @@ class MainApp extends StatelessWidget {
           child: Center(
             child: SizedBox(
               width: 600, // max allowed width
-              child: TwitterEmbedCard(),
+              child: TwitterEmbedCard(
+                data: tweetData,
+              ),
             ),
           ),
         ),
@@ -40,38 +60,37 @@ class MainApp extends StatelessWidget {
 }
 
 class TwitterEmbedCard extends StatelessWidget {
-  const TwitterEmbedCard({super.key});
+  final TweetData data;
+
+  const TwitterEmbedCard({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Delete this and implement the desired layout
-    return const Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         UserInfo(
-          url: 'assets/andrea-avatar.png',
-          nickname: 'Andrea Bizzotto',
-          username: 'biz84',
+          url: data.profileUrl,
+          nickname: data.nickname,
+          username: data.username,
         ),
-        SizedBox(height: 8),
-        Content(),
-        SizedBox(height: 4),
-        DateIndicator(date: '10:21 AM · Jun 20, 2023'),
-        Divider(
+        const SizedBox(height: 8),
+        Content(
+          contentText: data.contentText,
+          contentImage: data.contentImage,
+        ),
+        const SizedBox(height: 4),
+        DateIndicator(time: data.time, date: data.date),
+        const Divider(
           thickness: 1,
           height: 9,
         ),
-        SocialActionRow(),
-        SizedBox(height: 4,),
-        CustomRoundButton(
-          width: double.infinity,
-          child: Text(
-            'Read 12 replies',
-            style: TextStyle(
-              color: Colors.black,
-            ),
-          ),
+        SocialActionRow(
+          likeCount: data.likeCount,
+        ),
+        const SizedBox(height: 4),
+        ReadReplyButton(
+          replyCount: data.replyCount,
         ),
       ],
     );

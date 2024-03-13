@@ -3,17 +3,19 @@ import 'package:twitter_embed_card/svg_asset.dart';
 import 'package:twitter_embed_card/svg_icon.dart';
 
 class SocialActionRow extends StatelessWidget {
-  const SocialActionRow({Key? key}) : super(key: key);
+  final int likeCount;
+
+  const SocialActionRow({Key? key, required this.likeCount}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _SocialActionButton(icon: SvgIcon(asset: SvgAsset.heartRed), text: '997'),
-        SizedBox(width: 12),
-        _SocialActionButton(icon: SvgIcon(asset: SvgAsset.comment), text: 'Reply'),
-        SizedBox(width: 12),
-        _SocialActionButton(icon: SvgIcon(asset: SvgAsset.link), text: 'Copy link'),
+        _SocialActionButton(icon: const SvgIcon(asset: SvgAsset.heartRed), text: '$likeCount'),
+        const SizedBox(width: 12),
+        const _SocialActionButton(icon: SvgIcon(asset: SvgAsset.comment), text: 'Reply'),
+        const SizedBox(width: 12),
+        const _SocialActionButton(icon: SvgIcon(asset: SvgAsset.link), text: 'Copy link'),
       ],
     );
   }

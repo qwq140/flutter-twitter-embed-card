@@ -9,7 +9,12 @@ class UserInfo extends StatelessWidget {
   final String nickname;
   final String username;
 
-  const UserInfo({Key? key, required this.url, required this.nickname, required this.username}) : super(key: key);
+  const UserInfo(
+      {Key? key,
+      required this.url,
+      required this.nickname,
+      required this.username})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +25,7 @@ class UserInfo extends StatelessWidget {
           radius: 25,
           backgroundImage: AssetImage(url),
         ),
-        SizedBox(
-          width: 8,
-        ),
+        const SizedBox(width: 8),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,29 +34,22 @@ class UserInfo extends StatelessWidget {
               Row(
                 children: [
                   Text(nickname),
-                  SizedBox(width: 4),
-                  SvgIcon(
-                    asset: SvgAsset.heartBlue,
-                    height: 16,
-                  ),
-                  SizedBox(width: 4),
-                  SvgIcon(
-                    asset: SvgAsset.verified,
-                    height: 16,
-                  ),
-                  Spacer(),
-                  SvgIcon(asset: SvgAsset.x, height: 20),
+                  const SizedBox(width: 4),
+                  const SvgIcon(asset: SvgAsset.heartBlue, height: 16),
+                  const SizedBox(width: 4),
+                  const SvgIcon(asset: SvgAsset.verified, height: 16),
+                  const Spacer(),
+                  const SvgIcon(asset: SvgAsset.x, height: 20),
                 ],
               ),
-              SizedBox(
-                height: 4,
-              ),
+              const SizedBox(height: 4),
               RichText(
                 text: TextSpan(
                   children: [
                     TextSpan(text: '@$username'),
-                    TextSpan(text: ' · '),
-                    TextSpan(text: 'Follow', style: TextStyle(color: Colors.blue))
+                    const TextSpan(text: ' · '),
+                    const TextSpan(
+                        text: 'Follow', style: TextStyle(color: Colors.blue))
                   ],
                 ),
               ),
